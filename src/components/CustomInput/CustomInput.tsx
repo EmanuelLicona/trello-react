@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react'
 import { X } from 'react-feather'
 
-import { CustomInputProps } from '../../interfaces'
+import { CustomInputProps } from '../../types'
 
 import './CustomInput.css'
 
@@ -50,8 +50,7 @@ export const CustomInput = (props: CustomInputProps) => {
       ) : (
         <p
           className={`custom-input-display ${displayClass ? displayClass : ""}`}
-          onClick={() => setIsCustomInput(true)}
-        >
+          onClick={() => setIsCustomInput(true)}>
           {text}
         </p>
       )}
