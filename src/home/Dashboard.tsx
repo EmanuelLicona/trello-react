@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 
 import { CustomInput } from '../components/CustomInput/CustomInput'
-import { IBoard } from '../interfaces'
+import { IBoard, ICard } from '../interfaces'
 
-import { fetchBoardList } from '../helpers/boardAPI'
+import { fetchBoardList, updateLocalStorageBoards } from '../helpers/boardAPI'
 
 import './Dashboard.css'
+import { Board } from '../components/Board/Board'
 
 export const Dashboard = () => {
 
@@ -20,10 +21,10 @@ export const Dashboard = () => {
     setBoards(boards)
   }
 
-  // const [targetCard, setTargetCard] = useState({
-  //   boardId: 0,
-  //   cardId: 0,
-  // })
+  const [targetCard, setTargetCard] = useState({
+    boardId: 0,
+    cardId: 0,
+  })
 
   const addboardHandler = (name: string) => {
     const tempBoardsList = [...boards]
@@ -35,108 +36,108 @@ export const Dashboard = () => {
     setBoards(tempBoardsList)
   }
 
-  // const removeBoard = (boardId: number) => {
-  //   const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
-  //   if (boardIndex < 0) return
+  const removeBoard = (boardId: number) => {
+    const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
+    if (boardIndex < 0) return
 
-  //   const tempBoardsList = [...boards]
-  //   tempBoardsList.splice(boardIndex, 1)
-  //   setBoards(tempBoardsList)
-  // }
+    const tempBoardsList = [...boards]
+    tempBoardsList.splice(boardIndex, 1)
+    setBoards(tempBoardsList)
+  }
 
-  // const addCardHandler = (boardId: number, title: string) => {
-  //   const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
-  //   if (boardIndex < 0) return
+  const addCardHandler = (boardId: number, title: string) => {
+    const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
+    if (boardIndex < 0) return
 
-  //   const tempBoardsList = [...boards]
-  //   tempBoardsList[boardIndex].cards.push({
-  //     id: Date.now() + Math.random() * 2,
-  //     title,
-  //     labels: [],
-  //     date: "",
-  //     tasks: [],
-  //     desc: "",
-  //   })
-  //   setBoards(tempBoardsList)
-  // }
+    const tempBoardsList = [...boards]
+    tempBoardsList[boardIndex].cards.push({
+      id: Date.now() + Math.random() * 2,
+      title,
+      labels: [],
+      date: "",
+      tasks: [],
+      desc: "",
+    })
+    setBoards(tempBoardsList)
+  }
 
-  // const removeCard = (boardId: number, cardId: number) => {
-  //   const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
-  //   if (boardIndex < 0) return
+  const removeCard = (boardId: number, cardId: number) => {
+    const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
+    if (boardIndex < 0) return
 
-  //   const tempBoardsList = [...boards]
-  //   const cards = tempBoardsList[boardIndex].cards
+    const tempBoardsList = [...boards]
+    const cards = tempBoardsList[boardIndex].cards
 
-  //   const cardIndex = cards.findIndex((item) => item.id === cardId)
-  //   if (cardIndex < 0) return
+    const cardIndex = cards.findIndex((item) => item.id === cardId)
+    if (cardIndex < 0) return
 
-  //   cards.splice(cardIndex, 1)
-  //   setBoards(tempBoardsList)
-  // }
+    cards.splice(cardIndex, 1)
+    setBoards(tempBoardsList)
+  }
 
-  // const updateCard = (boardId: number, cardId: number, card: ICard) => {
-  //   const boardIndex = boards.findIndex((item) => item.id === boardId)
-  //   if (boardIndex < 0) return
+  const updateCard = (boardId: number, cardId: number, card: ICard) => {
+    const boardIndex = boards.findIndex((item) => item.id === boardId)
+    if (boardIndex < 0) return
 
-  //   const tempBoardsList = [...boards]
-  //   const cards = tempBoardsList[boardIndex].cards
+    const tempBoardsList = [...boards]
+    const cards = tempBoardsList[boardIndex].cards
 
-  //   const cardIndex = cards.findIndex((item) => item.id === cardId)
-  //   if (cardIndex < 0) return
+    const cardIndex = cards.findIndex((item) => item.id === cardId)
+    if (cardIndex < 0) return
 
-  //   tempBoardsList[boardIndex].cards[cardIndex] = card
+    tempBoardsList[boardIndex].cards[cardIndex] = card
 
-  //   setBoards(tempBoardsList)
-  // }
+    setBoards(tempBoardsList)
+  }
 
-  // const onDragEnd = (boardId: number, cardId: number) => {
-  //   const sourceBoardIndex = boards.findIndex(
-  //     (item: IBoard) => item.id === boardId,
-  //   )
-  //   if (sourceBoardIndex < 0) return
+  const onDragEnd = (boardId: number, cardId: number) => {
+    const sourceBoardIndex = boards.findIndex(
+      (item: IBoard) => item.id === boardId,
+    )
+    if (sourceBoardIndex < 0) return
 
-  //   const sourceCardIndex = boards[sourceBoardIndex]?.cards?.findIndex(
-  //     (item) => item.id === cardId,
-  //   )
-  //   if (sourceCardIndex < 0) return
+    const sourceCardIndex = boards[sourceBoardIndex]?.cards?.findIndex(
+      (item) => item.id === cardId,
+    )
+    if (sourceCardIndex < 0) return
 
-  //   const targetBoardIndex = boards.findIndex(
-  //     (item: IBoard) => item.id === targetCard.boardId,
-  //   )
-  //   if (targetBoardIndex < 0) return
+    const targetBoardIndex = boards.findIndex(
+      (item: IBoard) => item.id === targetCard.boardId,
+    )
+    if (targetBoardIndex < 0) return
 
-  //   const targetCardIndex = boards[targetBoardIndex]?.cards?.findIndex(
-  //     (item) => item.id === targetCard.cardId,
-  //   )
-  //   if (targetCardIndex < 0) return
+    const targetCardIndex = boards[targetBoardIndex]?.cards?.findIndex(
+      (item) => item.id === targetCard.cardId,
+    )
+    if (targetCardIndex < 0) return
 
-  //   const tempBoardsList = [...boards]
-  //   const sourceCard = tempBoardsList[sourceBoardIndex].cards[sourceCardIndex]
-  //   tempBoardsList[sourceBoardIndex].cards.splice(sourceCardIndex, 1)
-  //   tempBoardsList[targetBoardIndex].cards.splice(
-  //     targetCardIndex,
-  //     0,
-  //     sourceCard,
-  //   )
-  //   setBoards(tempBoardsList)
+    const tempBoardsList = [...boards]
+    const sourceCard = tempBoardsList[sourceBoardIndex].cards[sourceCardIndex]
+    tempBoardsList[sourceBoardIndex].cards.splice(sourceCardIndex, 1)
+    tempBoardsList[targetBoardIndex].cards.splice(
+      targetCardIndex,
+      0,
+      sourceCard,
+    )
+    setBoards(tempBoardsList)
 
-  //   setTargetCard({
-  //     boardId: 0,
-  //     cardId: 0,
-  //   })
-  // }
+    setTargetCard({
+      boardId: 0,
+      cardId: 0,
+    })
+  }
 
-  // const onDragEnter = (boardId: number, cardId: number) => {
-  //   if (targetCard.cardId === cardId) return
-  //   setTargetCard({
-  //     boardId: boardId,
-  //     cardId: cardId,
-  //   })
-  // }
+  const onDragEnter = (boardId: number, cardId: number) => {
+    if (targetCard.cardId === cardId) return
+    setTargetCard({
+      boardId: boardId,
+      cardId: cardId,
+    })
+  }
 
-  // useEffect(() => {
-  //   updateLocalStorageBoards(boards)
-  // }, [boards])
+  useEffect(() => {
+    updateLocalStorageBoards(boards)
+  }, [boards])
 
 
   return (
@@ -148,7 +149,21 @@ export const Dashboard = () => {
 
       <div className='app-boards-container'>
         <div className='app-boards'>
-          {/* ! TODO create board component */}
+
+          {
+            boards.map((board: IBoard) => (
+              <Board
+                key={board.id}
+                board={board}
+                addCard={addCardHandler}
+                removeBoard={() => removeBoard(board.id)}
+                removeCard={removeCard}
+                onDragEnd={onDragEnd}
+                onDragEnter={onDragEnter}
+                updateCard={updateCard}
+              />
+            ))
+          }
 
           <div className='app-boards-last'>
             <CustomInput
