@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from "react-feather"
 
 import { BoardProps } from '../../types'
 
 import { CustomInput } from '../CustomInput/CustomInput'
 
 import './Board.css'
+import { Dropdown } from '../Dropdown/Dropdown'
 
 export const Board = (props: BoardProps) => {
 
@@ -35,12 +36,14 @@ export const Board = (props: BoardProps) => {
           <div className='board-header-title-more' onClick={() => setShowDropdown(true)}>
             <MoreHorizontal />
 
-            {/* TODO: Dropdown start */}
-            <p onClick={() => removeBoard(board.id)}>
-              Delete Board
-            </p>
-            {/* TODO: Dropdown end */}
-
+            {showDropdown && (
+              <Dropdown
+                class="board-dropdown"
+                onClose={() => setShowDropdown(false)}
+              >
+                <p onClick={() => removeBoard(board?.id)}>Delete Board</p>
+              </Dropdown>
+            )}
           </div>
         </div>
 
