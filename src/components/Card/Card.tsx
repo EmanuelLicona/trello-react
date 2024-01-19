@@ -1,8 +1,13 @@
 import { useState } from 'react'
+import { AlignLeft, CheckSquare, Clock, MoreHorizontal } from 'react-feather'
+
 import { CardProps } from '../../types'
+
 import { CardInfo } from '../CardInfo/CardInfo'
-import { AlignLeft, CheckSquare } from 'react-feather'
+import { Dropdown } from '../Dropdown/Dropdown'
+
 import { formatDate } from '../../helpers/Utils'
+import { Chip } from '../Chip/Chip'
 
 export const Card = (props: CardProps) => {
 
@@ -38,8 +43,7 @@ export const Card = (props: CardProps) => {
           <div className='card-top-labels'>
             {
               labels?.map((label, index) => (
-                // TODO label chip
-                <div key={index}>{JSON.stringify(label)}</div>
+                <Chip key={index} item={label} />
               ))
             }
           </div>
@@ -50,7 +54,15 @@ export const Card = (props: CardProps) => {
               setShowDropdown(true)
             }}
           >
-            {/* TODO dropdown */}
+            <MoreHorizontal />
+            {showDropdown && (
+              <Dropdown
+                class="board-dropdown"
+                onClose={() => setShowDropdown(false)}
+              >
+                <p onClick={() => removeCard(boardId, id)}>Delete Card</p>
+              </Dropdown>
+            )}
           </div>
 
         </div>
@@ -65,7 +77,7 @@ export const Card = (props: CardProps) => {
         <div className='card-footer'>
           {date && (
             <p className="card-footer-item">
-              {/* TODO date component */}
+              <Clock className="card-footer-icon" />
               {formatDate(date)}
             </p>
           )}

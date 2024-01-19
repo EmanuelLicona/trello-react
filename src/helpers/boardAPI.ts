@@ -21,7 +21,7 @@ export class BoardAPI {
     }
 
     return BoardList;
-    //TODO:integrate API module when got API from backend team :)
+    //TODO:integrate API module when got API from backend
     /*
       private readonly api = new Api();//it will have all Restful verbs functions
       return axios.get(`ENDPOINT_GOES_HERE`)
