@@ -25,18 +25,18 @@ export const Board = (props: BoardProps) => {
 
 
   return (
-    <div className='board'>
-
-      <div className='board-inner' key={board.id}>
-
-        <div className='board-header'>
-          <p className='board-header-title'>
-            {board.title} <span>{board.cards.length || 0}</span>
+    <div className="board">
+      <div className="board-inner" key={board?.id}>
+        <div className="board-header">
+          <p className="board-header-title">
+            {board?.title}
+            <span>{board?.cards?.length || 0}</span>
           </p>
-
-          <div className='board-header-title-more' onClick={() => setShowDropdown(true)}>
+          <div
+            className="board-header-title-more"
+            onClick={() => setShowDropdown(true)}
+          >
             <MoreHorizontal />
-
             {showDropdown && (
               <Dropdown
                 class="board-dropdown"
@@ -47,8 +47,7 @@ export const Board = (props: BoardProps) => {
             )}
           </div>
         </div>
-
-        <div className='board-cards custom-scroll'>
+        <div className="board-cards custom-scroll">
           {board?.cards?.map((item) => (
             <Card
               key={item.id}
@@ -60,17 +59,15 @@ export const Board = (props: BoardProps) => {
               updateCard={updateCard}
             />
           ))}
-
           <CustomInput
-            text='add card'
+            text="+ Add Card"
+            placeholder="Enter Card Title"
             displayClass="board-add-card"
-            onSubmit={(title) => addCard(board.id, title)}
-            buttonText="Add another card"
+            editClass="board-add-card-edit"
+            onSubmit={(value: string) => addCard(board?.id, value)}
           />
         </div>
-
       </div>
-
     </div>
   )
 }

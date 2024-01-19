@@ -7,11 +7,12 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-
+  
+  
   color: #17394d;
 }
 
-.board-inner {
+.board-inner{
   background-color: rgb(223 227 230 / 55%);
   padding: 15px;
   border-radius: 3px;
@@ -32,7 +33,6 @@
   align-items: center;
 }
 
-
 .board-header-title span {
   color: rgb(145, 145, 145);
 }
@@ -48,7 +48,6 @@
   width: 150px !important;
   cursor: default;
 }
-
 .board-dropdown p {
   border-bottom: 1px solid #f8f8f8;
   cursor: pointer;
@@ -72,7 +71,6 @@
   width: 100%;
   text-align: center;
 }
-
 .board-add-card-edit {
   background-color: #fff;
   border-radius: 10px;
