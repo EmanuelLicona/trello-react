@@ -4,9 +4,10 @@ import { MoreHorizontal } from "react-feather"
 import { BoardProps } from '../../types'
 
 import { CustomInput } from '../CustomInput/CustomInput'
+import { Dropdown } from '../Dropdown/Dropdown'
+import { Card } from '../Card/Card'
 
 import './Board.css'
-import { Dropdown } from '../Dropdown/Dropdown'
 
 export const Board = (props: BoardProps) => {
 
@@ -48,7 +49,17 @@ export const Board = (props: BoardProps) => {
         </div>
 
         <div className='board-cards custom-scroll'>
-          {/* TODO: Board Cards */}
+          {board?.cards?.map((item) => (
+            <Card
+              key={item.id}
+              card={item}
+              boardId={board.id}
+              removeCard={removeCard}
+              onDragEnter={onDragEnter}
+              onDragEnd={onDragEnd}
+              updateCard={updateCard}
+            />
+          ))}
 
           <CustomInput
             text='add card'
