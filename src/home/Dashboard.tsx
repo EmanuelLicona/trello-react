@@ -7,10 +7,16 @@ import { fetchBoardList, updateLocalStorageBoards } from '../helpers/boardAPI'
 
 import './Dashboard.css'
 import { Board } from '../components/Board/Board'
+import { useWorkspaceStore } from '../hooks/useWorkspaceStore'
+import { useBoardStore } from '../hooks/useBoardStore'
 
 export const Dashboard = () => {
 
-  const [boards, setBoards] = useState<IBoard[]>([])
+  const { boards, onAddBoard } = useBoardStore()
+
+  // ! =============================================================================
+  const [boardsTemp, setBoardsTemp] = useState<IBoard[]>([])
+  const { currentWorkspace } = useWorkspaceStore()
 
   useEffect(() => {
     fetchData()
@@ -18,7 +24,7 @@ export const Dashboard = () => {
 
   async function fetchData() {
     const boards: IBoard[] = await fetchBoardList()
-    setBoards(boards)
+    setBoardsTemp(boards)
   }
 
   const [targetCard, setTargetCard] = useState({
@@ -27,59 +33,14 @@ export const Dashboard = () => {
   })
 
   const addboardHandler = (name: string) => {
-    const tempBoardsList = [...boards]
-    tempBoardsList.push({
-      id: Date.now() + Math.random() * 2,
-      title: name,
-      cards: [],
-    })
-    setBoards(tempBoardsList)
-  }
-
-  const removeBoard = (boardId: number) => {
-    const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
-    if (boardIndex < 0) return
-
-    const tempBoardsList = [...boards]
-    tempBoardsList.splice(boardIndex, 1)
-    setBoards(tempBoardsList)
-  }
-
-  const addCardHandler = (boardId: number, title: string) => {
-    const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
-    if (boardIndex < 0) return
-
-    const tempBoardsList = [...boards]
-    tempBoardsList[boardIndex].cards.push({
-      id: Date.now() + Math.random() * 2,
-      title,
-      labels: [],
-      date: "",
-      tasks: [],
-      desc: "",
-    })
-    setBoards(tempBoardsList)
-  }
-
-  const removeCard = (boardId: number, cardId: number) => {
-    const boardIndex = boards.findIndex((item: IBoard) => item.id === boardId)
-    if (boardIndex < 0) return
-
-    const tempBoardsList = [...boards]
-    const cards = tempBoardsList[boardIndex].cards
-
-    const cardIndex = cards.findIndex((item) => item.id === cardId)
-    if (cardIndex < 0) return
-
-    cards.splice(cardIndex, 1)
-    setBoards(tempBoardsList)
+    onAddBoard(name)
   }
 
   const updateCard = (boardId: number, cardId: number, card: ICard) => {
-    const boardIndex = boards.findIndex((item) => item.id === boardId)
+    const boardIndex = boardsTemp.findIndex((item) => item.id === boardId)
     if (boardIndex < 0) return
 
-    const tempBoardsList = [...boards]
+    const tempBoardsList = [...boardsTemp]
     const cards = tempBoardsList[boardIndex].cards
 
     const cardIndex = cards.findIndex((item) => item.id === cardId)
@@ -87,32 +48,32 @@ export const Dashboard = () => {
 
     tempBoardsList[boardIndex].cards[cardIndex] = card
 
-    setBoards(tempBoardsList)
+    setBoardsTemp(tempBoardsList)
   }
 
   const onDragEnd = (boardId: number, cardId: number) => {
-    const sourceBoardIndex = boards.findIndex(
+    const sourceBoardIndex = boardsTemp.findIndex(
       (item: IBoard) => item.id === boardId,
     )
     if (sourceBoardIndex < 0) return
 
-    const sourceCardIndex = boards[sourceBoardIndex]?.cards?.findIndex(
+    const sourceCardIndex = boardsTemp[sourceBoardIndex]?.cards?.findIndex(
       (item) => item.id === cardId,
     )
 
     if (sourceCardIndex < 0) return
 
-    const targetBoardIndex = boards.findIndex(
+    const targetBoardIndex = boardsTemp.findIndex(
       (item: IBoard) => item.id === targetCard.boardId,
     )
     if (targetBoardIndex < 0) return
 
-    const targetCardIndex = boards[targetBoardIndex]?.cards?.findIndex(
+    const targetCardIndex = boardsTemp[targetBoardIndex]?.cards?.findIndex(
       (item) => item.id === targetCard.cardId,
     )
     if (targetCardIndex < 0) return
 
-    const tempBoardsList = [...boards]
+    const tempBoardsList = [...boardsTemp]
     const sourceCard = tempBoardsList[sourceBoardIndex].cards[sourceCardIndex]
     tempBoardsList[sourceBoardIndex].cards.splice(sourceCardIndex, 1)
     tempBoardsList[targetBoardIndex].cards.splice(
@@ -120,7 +81,7 @@ export const Dashboard = () => {
       0,
       sourceCard,
     )
-    setBoards(tempBoardsList)
+    setBoardsTemp(tempBoardsList)
 
     setTargetCard({
       boardId: 0,
@@ -129,8 +90,8 @@ export const Dashboard = () => {
   }
 
   const onDragEnter = (boardId: number, cardId: number) => {
-    console.log(boardId, cardId);
-    
+    console.log(boardId, cardId)
+
     if (targetCard.cardId === cardId) return
 
     setTargetCard({
@@ -140,15 +101,15 @@ export const Dashboard = () => {
   }
 
   useEffect(() => {
-    updateLocalStorageBoards(boards)
-  }, [boards])
+    updateLocalStorageBoards(boardsTemp)
+  }, [boardsTemp])
 
 
   return (
     <div className='app'>
 
       <div className='app-nav'>
-        <h1>Trello Kanban Board</h1>
+        <h1>{currentWorkspace.title}</h1>
       </div>
 
       <div className='app-boards-container'>
@@ -159,9 +120,6 @@ export const Dashboard = () => {
               <Board
                 key={board.id}
                 board={board}
-                addCard={addCardHandler}
-                removeBoard={() => removeBoard(board.id)}
-                removeCard={removeCard}
                 onDragEnd={onDragEnd}
                 onDragEnter={onDragEnter}
                 updateCard={updateCard}

@@ -8,19 +8,17 @@ import { Dropdown } from '../Dropdown/Dropdown'
 import { Card } from '../Card/Card'
 
 import './Board.css'
+import { useBoardStore } from '../../hooks/useBoardStore'
 
 export const Board = (props: BoardProps) => {
 
   const {
     board,
-    addCard,
-    removeBoard,
-    removeCard,
     onDragEnd,
     onDragEnter,
-    updateCard
   } = props
 
+  const { onAddCard, onRemoveBoard } = useBoardStore()
   const [showDropdown, setShowDropdown] = useState(false)
 
   return (
@@ -43,7 +41,7 @@ export const Board = (props: BoardProps) => {
                 class="board-dropdown"
                 onClose={() => setShowDropdown(false)}
               >
-                <p onClick={() => removeBoard(board?.id)}>Delete Board</p>
+                <p onClick={() => onRemoveBoard(board?.id)}>Delete Board</p>
               </Dropdown>
             )}
           </div>
@@ -54,10 +52,8 @@ export const Board = (props: BoardProps) => {
               key={item.id}
               card={item}
               boardId={board.id}
-              removeCard={removeCard}
               onDragEnter={onDragEnter}
               onDragEnd={onDragEnd}
-              updateCard={updateCard}
             />
           ))}
           <CustomInput
@@ -65,7 +61,7 @@ export const Board = (props: BoardProps) => {
             placeholder="Enter Card Title"
             displayClass="board-add-card"
             editClass="board-add-card-edit"
-            onSubmit={(value: string) => addCard(board?.id, value)}
+            onSubmit={(value: string) => onAddCard(board.id, value)}
           />
         </div>
       </div>

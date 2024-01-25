@@ -10,10 +10,15 @@ import { formatDate } from '../../helpers/Utils'
 import { Chip } from '../Chip/Chip'
 
 import './Card.css'
+import { useBoardStore } from '../../hooks/useBoardStore'
 
 export const Card = (props: CardProps) => {
 
-  const { card, boardId, removeCard, onDragEnd, onDragEnter, updateCard } = props
+  const { onRemoveCard } = useBoardStore()
+
+
+  const { card, boardId, onDragEnd, onDragEnter } = props
+
   const { id, title, desc, date, tasks, labels } = card
 
   const [showDropdown, setShowDropdown] = useState(false)
@@ -28,7 +33,6 @@ export const Card = (props: CardProps) => {
         onClose={() => setShowModal(false)}
         card={card}
         boardId={boardId}
-        updateCard={updateCard}
       />
     )}
 
@@ -50,8 +54,8 @@ export const Card = (props: CardProps) => {
         <div
           className="card-top-more"
           onClick={(event) => {
-            event.stopPropagation();
-            setShowDropdown(true);
+            event.stopPropagation()
+            setShowDropdown(true)
           }}
         >
           <MoreHorizontal />
@@ -60,7 +64,7 @@ export const Card = (props: CardProps) => {
               class="board-dropdown"
               onClose={() => setShowDropdown(false)}
             >
-              <p onClick={() => removeCard(boardId, id)}>Delete Card</p>
+              <p onClick={() => onRemoveCard(boardId, id)}>Delete Card</p>
             </Dropdown>
           )}
         </div>

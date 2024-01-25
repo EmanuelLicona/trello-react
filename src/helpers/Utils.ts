@@ -20,4 +20,4 @@ export const colorsList = [
   "#9975bd",
   "#cf61a1",
   "#240959",
-];
+]
