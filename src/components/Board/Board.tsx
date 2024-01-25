@@ -23,7 +23,6 @@ export const Board = (props: BoardProps) => {
 
   const [showDropdown, setShowDropdown] = useState(false)
 
-
   return (
     <div className="board">
       <div className="board-inner" key={board?.id}>
@@ -32,10 +31,12 @@ export const Board = (props: BoardProps) => {
             {board?.title}
             <span>{board?.cards?.length || 0}</span>
           </p>
+
           <div
             className="board-header-title-more"
             onClick={() => setShowDropdown(true)}
           >
+
             <MoreHorizontal />
             {showDropdown && (
               <Dropdown

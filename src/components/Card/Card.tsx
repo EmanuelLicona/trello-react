@@ -38,6 +38,7 @@ export const Card = (props: CardProps) => {
       draggable
       onDragEnd={() => onDragEnd(boardId, id)}
       onDragEnter={() => onDragEnter(boardId, id)}
+      onDragOver={(event) => event.preventDefault()}
       onClick={() => setShowModal(true)}
     >
       <div className="card-top">

@@ -5,7 +5,8 @@ const LocalStorageKeyName = "kanban-boards";
 //Data Layer
 export class BoardAPI {
   async fetchBoardList(): Promise<IBoard[]> {
-    const apiData: IBoard[] = ApiMockResponse;
+    // const apiData: IBoard[] = ApiMockResponse;
+    const apiData: IBoard[] = [];
 
     let BoardList: IBoard[] = [];
     
@@ -15,6 +16,7 @@ export class BoardAPI {
         localStorage.getItem(LocalStorageKeyName) ?? "",
       );
       BoardList = [...localStorageData];
+
     } else {
       BoardList = [...apiData];
       updateLocalStorageBoards(BoardList);
@@ -37,6 +39,8 @@ export async function fetchBoardList(): Promise<IBoard[]> {
   const api = new BoardAPI();
   return api.fetchBoardList();
 }
+
 export function updateLocalStorageBoards(boards: IBoard[]) {
+  
   localStorage.setItem(LocalStorageKeyName, JSON.stringify(boards));
 }

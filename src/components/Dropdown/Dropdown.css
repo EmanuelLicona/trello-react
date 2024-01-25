@@ -1,4 +1,7 @@
 .dropdown {
+
+  display: flex;
+
   position: absolute;
   right: 0;
   top: 100%;
@@ -12,4 +15,11 @@
   max-height: 390px;
   overflow-y: auto;
   z-index: 5;
+}
+
+.dropdown .icon-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
 }

@@ -99,6 +99,7 @@ export const Dashboard = () => {
     const sourceCardIndex = boards[sourceBoardIndex]?.cards?.findIndex(
       (item) => item.id === cardId,
     )
+
     if (sourceCardIndex < 0) return
 
     const targetBoardIndex = boards.findIndex(
@@ -128,7 +129,10 @@ export const Dashboard = () => {
   }
 
   const onDragEnter = (boardId: number, cardId: number) => {
+    console.log(boardId, cardId);
+    
     if (targetCard.cardId === cardId) return
+
     setTargetCard({
       boardId: boardId,
       cardId: cardId,
