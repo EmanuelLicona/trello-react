@@ -13,7 +13,7 @@ body {
 .app-nav {
   padding: 5px 0px;
   box-shadow: 0 1px 20px rgba(56, 40, 40, 0.05);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   background: transparent;
@@ -24,7 +24,7 @@ body {
   margin-left: 15px;
   line-height: 36px;
   margin-right: 8px;
-  padding: 0;
+  padding: 0 0 10px 0;
 }
 
 .app-boards-container {

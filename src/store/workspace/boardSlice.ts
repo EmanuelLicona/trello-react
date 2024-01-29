@@ -59,6 +59,15 @@ export const boardSlice = createSlice({
       cards[cardIndex] = card
     },
 
+    cardMove: (state, { payload }: { payload: { sourceBoardIndex: number, sourceCardIndex: number, targetBoardIndex: number, targetCardIndex: number } }) => {
+      const { sourceBoardIndex, sourceCardIndex, targetBoardIndex, targetCardIndex } = payload
+      
+      const sourceCard = state.boards[sourceBoardIndex].cards[sourceCardIndex]
+      state.boards[sourceBoardIndex].cards.splice(sourceCardIndex, 1)
+      state.boards[targetBoardIndex].cards.splice(targetCardIndex, 0, sourceCard)
+      
+    }
+
   },
 })
 
@@ -68,5 +77,6 @@ export const {
   removeBoard,
   addCard,
   removeCard,
-  updateCard
+  updateCard,
+  cardMove
 } = boardSlice.actions

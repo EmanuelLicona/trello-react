@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreRootState } from '../store/store'
 import { IBoard, ICard } from '../interfaces'
-import { addCard, addboard, removeBoard, removeCard, updateCard } from '../store/workspace/boardSlice'
+import { addCard, addboard, cardMove, removeBoard, removeCard, setBoards, updateCard } from '../store/workspace/boardSlice'
 
 export const useBoardStore = () => {
 
@@ -9,7 +9,10 @@ export const useBoardStore = () => {
   const {boards} = useSelector((state: StoreRootState) => state.board)
 
   //  * Methods of Board
-  //  TODO: set boards
+
+  const onSetBoards = (boards: IBoard[]) => {
+    setBoards(boards)
+  }
 
   const onAddBoard = (title: string) => {
       const board: IBoard = {
@@ -43,17 +46,41 @@ export const useBoardStore = () => {
     dispatch(updateCard({ boardId, cardId, card }))
   }
 
+  const onCardMove = (sourceBoardId: number, sourceCardId: number, targetBoardId: number, targetCardId: number) => {
+     // * Board que quiero mover
+     const sourceBoardIndex = boards.findIndex((item: IBoard) => item.id === sourceBoardId)
+     if (sourceBoardIndex < 0) return
+   
+     const sourceCardIndex = boards[sourceBoardIndex].cards.findIndex((item: ICard) => item.id === sourceCardId)
+     if (sourceCardIndex < 0) return
+ 
+     // * Board destino
+     const targetBoardIndex = boards.findIndex((item: IBoard) => item.id ===  targetBoardId)
+     if (targetBoardIndex < 0) return
+ 
+     let targetCardIndex = 0
+     if ( targetCardId !== -1) { // ! si es -1 es porque no hay card destino
+       targetCardIndex = boards[targetBoardIndex].cards.findIndex((item: ICard) => item.id === targetCardId)
+     }
+     if (targetCardIndex < 0) return
+
+     dispatch(cardMove({ sourceBoardIndex, sourceCardIndex, targetBoardIndex, targetCardIndex }))
+  }
+
 
   return {
     boards,
 
     // Methods of Board
+    onSetBoards,
     onAddBoard,
     onRemoveBoard,
 
     // Methods of Card
     onAddCard,
     onRemoveCard,
-    onUpdateCard
+    onUpdateCard,
+
+    onCardMove
   }
 }

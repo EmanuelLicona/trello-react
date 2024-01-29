@@ -21,8 +21,11 @@ export const Board = (props: BoardProps) => {
   const { onAddCard, onRemoveBoard } = useBoardStore()
   const [showDropdown, setShowDropdown] = useState(false)
 
+
+
   return (
-    <div className="board">
+    <div className="board"
+    >
       <div className="board-inner" key={board?.id}>
         <div className="board-header">
           <p className="board-header-title">
