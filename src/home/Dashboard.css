@@ -1,4 +1,4 @@
-body {
+.app {
   background-image: url("../assets/images/background.webp");
   background-size: cover;
 }
@@ -69,6 +69,7 @@ body {
  */
 *::-webkit-scrollbar {
   width: 12px;
+  height: 8px;
 }
 
 /* Track */

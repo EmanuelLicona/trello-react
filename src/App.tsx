@@ -1,11 +1,14 @@
 import { Provider } from 'react-redux'
-import { Dashboard } from './home/Dashboard'
 import { store } from './store/store'
+import { AppRouter } from './router/AppRouter'
 
 export const App = () => {
   return (
     <Provider store={store}>
-      <Dashboard />
+      {/* <Dashboard /> */}
+
+      <AppRouter />
+
     </Provider>
   )
 }

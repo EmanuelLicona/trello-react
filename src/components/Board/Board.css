@@ -15,7 +15,7 @@
 .board-inner{
   background-color: rgb(223 227 230 / 55%);
   padding: 15px;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 
 .board-header {
@@ -34,7 +34,7 @@
 }
 
 .board-header-title span {
-  color: rgb(145, 145, 145);
+  color: red;
 }
 
 .board-header-title-more {

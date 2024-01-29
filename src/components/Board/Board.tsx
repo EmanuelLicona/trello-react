@@ -27,7 +27,10 @@ export const Board = (props: BoardProps) => {
     <div className="board"
     >
       <div className="board-inner" key={board?.id}>
-        <div className="board-header">
+        <div className="board-header"
+          onDragOver={(e) => e.preventDefault()}
+          onDragEnter={() => onDragEnter(board?.id, -1)}
+        >
           <p className="board-header-title">
             {board?.title}
             <span>{board?.cards?.length || 0}</span>
@@ -60,7 +63,7 @@ export const Board = (props: BoardProps) => {
             />
           ))}
           <CustomInput
-            text="+ Add Card"
+            text="Add Card"
             placeholder="Enter Card Title"
             displayClass="board-add-card"
             editClass="board-add-card-edit"
