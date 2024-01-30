@@ -5,4 +5,6 @@ export interface IWorkspace {
   title: string
   description: string
   boards?: IBoard[]
+  createdAt: number
+  updateAt: number
 }
