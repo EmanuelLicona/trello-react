@@ -1,28 +1,41 @@
 
 import { CustomInput } from '../components/CustomInput/CustomInput'
 import { IBoard } from '../interfaces'
+import { Navigate } from 'react-router-dom'
 
 import './Dashboard.css'
 import { Board } from '../components/Board/Board'
 import { useBoardStore } from '../hooks/useBoardStore'
 import { useDragAndDrop } from '../hooks/useDragAndDrop'
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore'
+import { useEffect, useState } from 'react'
 
 
 export const Dashboard = () => {
 
-  const { boards, onAddBoard } = useBoardStore()
+  const { boards, onAddBoard, onSetBoards } = useBoardStore()
   const { onDragEnd, onDragEnter } = useDragAndDrop()
 
-  const { currentWorkspace } = useWorkspaceStore()
+  const { currentWorkspace, startUpdateWorkspace } = useWorkspaceStore()
+  const [isFirstTime, setIsFirstTime] = useState(true)
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
+  useEffect(() => {
+    if (!currentWorkspace) return
+    onSetBoards(currentWorkspace.boards || [])
+  }, [])
 
-  // useEffect(() => {
-  //   updateLocalStorageBoards(boardsTemp)
-  // }, [boardsTemp])
+  useEffect(() => {
+    if (!currentWorkspace) return
+    if (!isFirstTime) {
+      startUpdateWorkspace({ ...currentWorkspace, boards: [...boards] })
+    }
+
+    setIsFirstTime(false)
+  }, [boards])
+
+  if (!currentWorkspace) return <Navigate to="/workspaces" />
+
+
 
   // async function fetchData() {
   //   const boards: IBoard[] = await fetchBoardList()

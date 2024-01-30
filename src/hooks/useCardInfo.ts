@@ -8,7 +8,6 @@ export const useCardInfo = (props: CardInfoProps) => {
 
   const { onUpdateCard } = useBoardStore()
 
-
   const [isFirstRender, setIsFirstRender] = useState(true)
 
   const [selectedColor, setSelectedColor] = useState("")
@@ -83,7 +82,7 @@ export const useCardInfo = (props: CardInfoProps) => {
 
     const updatedTasks = [...tasks]  // Crear una copia profunda del array de tareas
     updatedTasks[index] = { ...updatedTasks[index], completed: Boolean(value) }  // Modificar la tarea específica
-  
+
     setCardValues({
       ...cardValues,
       tasks: updatedTasks,

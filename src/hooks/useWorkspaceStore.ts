@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore/lite'
+import { collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore/lite'
 import { deleteDoc } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../firebase/config'
 import { StoreRootState } from '../store/store'
@@ -44,8 +44,8 @@ export const useWorkspaceStore = () => {
 
       const workspaces: IWorkspace[] = []
       docs.forEach(doc => {
-        const { title, description, createdAt, updateAt } = doc.data()
-        workspaces.push({ workspaceId: doc.id, title, description, createdAt, updateAt })
+        const { title, description, createdAt, updateAt, boards = [] } = doc.data()
+        workspaces.push({ workspaceId: doc.id, title, description, createdAt, updateAt, boards })
       })
 
 
@@ -77,6 +77,19 @@ export const useWorkspaceStore = () => {
     dispatch(setCurrentWorkspace({ ...workspace }))
   }
 
+  const startUpdateWorkspace = async (workspace: IWorkspace) => {
+    try {
+      const { uid } = user
+      if (!uid) throw new Error('User not logged in')
+
+      const docRef = doc(FirebaseDB, `${uid}/app/workspaces/${workspace.workspaceId}`)
+      await updateDoc(docRef, { ...workspace})
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     workspaces,
     currentWorkspace,
@@ -85,7 +98,7 @@ export const useWorkspaceStore = () => {
     saveNewWorkspace,
     startDeleteWorkspace,
 
-    selectCurrentWorkspace
-
+    selectCurrentWorkspace,
+    startUpdateWorkspace
   }
 }

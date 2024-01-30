@@ -4,13 +4,13 @@ import { ICard } from '../../interfaces'
 
 
 export const boardSlice = createSlice({
-  name: "workspace",
+  name: "board",
   initialState: {
     boards: [] as IBoard[],
   },
   reducers: {
-    setBoards: (state, action) => {
-      state.boards = action.payload
+    setBoards: (state, { payload }: { payload: IBoard[]}) => {
+      state.boards = payload
     },
     //  Boards Actions
     addboard: (state, { payload }: { payload: IBoard }) => {
@@ -66,6 +66,10 @@ export const boardSlice = createSlice({
       state.boards[sourceBoardIndex].cards.splice(sourceCardIndex, 1)
       state.boards[targetBoardIndex].cards.splice(targetCardIndex, 0, sourceCard)
       
+    },
+
+    clearBoards: (state) => {
+      state.boards = []
     }
 
   },
@@ -78,5 +82,6 @@ export const {
   addCard,
   removeCard,
   updateCard,
-  cardMove
+  cardMove,
+  clearBoards
 } = boardSlice.actions

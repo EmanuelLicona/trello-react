@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { checkingCredentials, login, logout } from '../store/auth/authSlice'
 import { logoutFirebase, registerUserWithEmailAndPassword, singInWithEmailAndPassword, singInWithGoogle } from '../firebase/provider'
 import { StoreRootState } from '../store/store'
+import { clearBoards } from '../store/workspace/boardSlice'
+import { clearWorkspaces } from '../store/workspace/workspaceSlice'
 
 export const useAuthStore = () => {
   const { user } = useSelector((state: StoreRootState) => state.auth)
@@ -47,6 +49,9 @@ export const useAuthStore = () => {
   const startLogout = async () => {
     await logoutFirebase()
     dispatch(logout())
+
+    dispatch(clearBoards())
+    dispatch(clearWorkspaces())
   }
 
   return {

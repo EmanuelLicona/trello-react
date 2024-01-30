@@ -29,6 +29,11 @@ export const workspaceSlice = createSlice({
 
     deleteWorkspace: (state, { payload }: { payload: string }) => {
       state.workspaces = state.workspaces.filter((item: IWorkspace) => item.workspaceId !== payload)
+    },
+
+    clearWorkspaces: (state) => {
+      state.workspaces = [],
+      state.currentWorkspace = null
     }
   },
 })
@@ -38,5 +43,6 @@ export const {
   addNewWorkspace,
   setCurrentWorkspace,
   clearCurrentWorkspace,
-  deleteWorkspace
+  deleteWorkspace,
+  clearWorkspaces
 } = workspaceSlice.actions
