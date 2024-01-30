@@ -1,15 +1,14 @@
-import { useAuthStore } from '../hooks/useAuthStore'
+import { Header } from '../components/Header/Header'
 
 export const Workspaces = () => {
-  const { startLogout } = useAuthStore()
-
-  const handleLogout = () => {
-    startLogout()
-  }
 
   return (
-    <div>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <>
+
+      <Header />
+
+      <h1>Workspaces</h1>
+      <hr />
+    </>
   )
 }

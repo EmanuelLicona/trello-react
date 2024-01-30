@@ -1,10 +1,22 @@
 import { ReactNode } from 'react'
 
 import './AuthLayout.css'
-  export const AuthLayout = ({children}: {children: ReactNode}) => {
+import { useCheckAuth } from '../../hooks/useCheckAuth'
+import { AuthStatus } from '../enums/authStatus'
+import { Loader } from '../../components/Loader/Loader'
+export const AuthLayout = ({ children }: { children: ReactNode }) => {
+
+  const { status } = useCheckAuth()
+
+
   return (
-    <div className='auth-layout'>
-      {children}
-    </div>
+    <>
+     {
+      status === AuthStatus.CHECKING && <Loader />
+     }
+      <div className='auth-layout'>
+        {children}
+      </div>
+    </>
   )
 }

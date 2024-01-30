@@ -7,15 +7,13 @@ import { useCheckAuth } from '../hooks/useCheckAuth'
 
 export const AppRouter = () => {
   const { status } = useCheckAuth()
-  const authStatus = status
 
   return (
     <Routes>
-
       {
-        (authStatus === AuthStatus.NOT_AUTHENTICATED)
-          ? <Route path="auth/*" element={<AuthRoutes />} />
-          : <Route path="/*" element={<HomeRoutes />} />
+        (status === AuthStatus.AUTHENTICATED)
+          ? <Route path="/*" element={<HomeRoutes />} />
+          : <Route path="auth/*" element={<AuthRoutes />} />
       }
 
       <Route path="/*" element={<Navigate to="/auth" />} />

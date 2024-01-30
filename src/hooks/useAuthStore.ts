@@ -1,8 +1,11 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { checkingCredentials, login, logout } from '../store/auth/authSlice'
 import { logoutFirebase, registerUserWithEmailAndPassword, singInWithEmailAndPassword, singInWithGoogle } from '../firebase/provider'
+import { StoreRootState } from '../store/store'
 
 export const useAuthStore = () => {
+  const { user } = useSelector((state: StoreRootState) => state.auth)
+
 
   const dispatch = useDispatch()
 
@@ -47,6 +50,7 @@ export const useAuthStore = () => {
   }
 
   return {
+    user,
     startGoogleLogin,
     startLoginWithEmailPassword,
     startLogout,

@@ -4,9 +4,10 @@ import { IBoard } from '../interfaces'
 
 import './Dashboard.css'
 import { Board } from '../components/Board/Board'
-import { useWorkspaceStore } from '../hooks/useWorkspaceStore'
 import { useBoardStore } from '../hooks/useBoardStore'
 import { useDragAndDrop } from '../hooks/useDragAndDrop'
+import { useWorkspaceStore } from '../hooks/useWorkspaceStore'
+
 
 export const Dashboard = () => {
 
