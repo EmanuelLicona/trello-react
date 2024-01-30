@@ -1,22 +1,21 @@
-import { useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AuthStatus } from '../auth/enums/authStatus'
 import { AuthRoutes } from '../auth/routes/AuthRoutes'
 import { HomeRoutes } from '../home/routes/HomeRoutes'
 
-import { StoreRootState } from '../store/store'
+import { useCheckAuth } from '../hooks/useCheckAuth'
 
 export const AppRouter = () => {
-  const { status } = useSelector((state: StoreRootState) => state.auth)
+  const { status } = useCheckAuth()
   const authStatus = status
 
   return (
     <Routes>
 
       {
-        (authStatus === AuthStatus.AUTHENTICATED)
-          ? <Route path="/*" element={<HomeRoutes />} />
-          : <Route path="auth/*" element={<AuthRoutes />} />
+        (authStatus === AuthStatus.NOT_AUTHENTICATED)
+          ? <Route path="auth/*" element={<AuthRoutes />} />
+          : <Route path="/*" element={<HomeRoutes />} />
       }
 
       <Route path="/*" element={<Navigate to="/auth" />} />
