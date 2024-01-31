@@ -49,21 +49,6 @@ export const useBoardStore = () => {
 
   const onUpdateCard = async (boardId: number, cardId: number, card: ICard) => {
     dispatch(updateCard({ boardId, cardId, card }))
-
-    // try {
-
-    //   const { uid } = user
-    //   if (!currentWorkspace) throw new Error('No current workspace')
-    //   if (!uid) throw new Error('User not logged in')
-
-    //   const docRef = doc(FirebaseDB, `${uid}/app/workspaces/${currentWorkspace.workspaceId}`)
-    //   const obj: IWorkspace = { ...currentWorkspace, boards: boards }
-
-    //   await updateDoc(docRef, { ...obj })
-    // } catch (error) {
-    //   console.log(error)
-
-    // }
   }
 
   const onCardMove = (sourceBoardId: number, sourceCardId: number, targetBoardId: number, targetCardId: number) => {

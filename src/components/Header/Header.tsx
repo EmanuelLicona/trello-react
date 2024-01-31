@@ -1,6 +1,7 @@
 import { LogOut } from 'react-feather'
 import { useAuthStore } from '../../hooks/useAuthStore'
 
+import UserImage from '../../assets/images/user_icon.webp'
 
 export const Header = () => {
 
@@ -22,7 +23,12 @@ export const Header = () => {
       <div className="flex items-center justify-center gap-3 my-4">
         <div className='flex items-center gap-1'>
           {
-            user?.photoURL && <img className="w-8 h-8 rounded-full" src={user?.photoURL} alt="Profile" />
+            user?.photoURL && <img className="w-8 h-8 rounded-full" src={user?.photoURL}  alt="Profile"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null
+                currentTarget.src = UserImage
+              }}
+            />
           }
           <p className="">{user?.displayName}</p>
         </div>

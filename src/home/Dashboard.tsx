@@ -1,15 +1,17 @@
-
-import { CustomInput } from '../components/CustomInput/CustomInput'
-import { IBoard } from '../interfaces'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import './Dashboard.css'
+import { IBoard } from '../interfaces'
+
+import { CustomInput } from '../components/CustomInput/CustomInput'
 import { Board } from '../components/Board/Board'
+import { ButtonWorkspace } from '../components/ButtonWorkspace/ButtonWorkspace'
+
 import { useBoardStore } from '../hooks/useBoardStore'
 import { useDragAndDrop } from '../hooks/useDragAndDrop'
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore'
-import { useEffect, useState } from 'react'
-import { ButtonWorkspace } from '../components/ButtonWorkspace/ButtonWorkspace'
+
+import './Dashboard.css'
 
 
 export const Dashboard = () => {
@@ -49,8 +51,9 @@ export const Dashboard = () => {
   return (
     <div className='app'>
 
-      <div className='app-nav'>
-        <h1 className='text-4xl uppercase font-bold'>{currentWorkspace.title}</h1>
+      <div className='app-nav px-7 bg-slate-500/60 flex justify-between'>
+        <h1 className='text-2xl'>{currentWorkspace.title}</h1>
+        <h1 className='text-2xl'>{new Date(currentWorkspace.updateAt).toLocaleDateString()}</h1>
       </div>
 
       <div className='app-boards-container'>
