@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Header } from '../components/Header/Header'
 import { WorkspaceContainer } from '../components/WorkspaceContainer/WorkspaceContainer'
 
-import './Workspaces.css'
 import { WorkspaceItem } from '../components/WorkspaceItem/WorkspaceItem'
 import { ModalCreateWorkspace } from '../components/ModalCreateWorkspace/ModalCreateWorkspace'
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore'
@@ -19,7 +18,7 @@ export const Workspaces = () => {
   const [isLoadingWorkspace] = useState(false)
 
 
-  const handleOnClickWorkspace = (workspaceId: string) => { 
+  const handleOnClickWorkspace = (workspaceId: string) => {
     selectCurrentWorkspace(workspaceId)
     navigate(`/board/${workspaceId}`)
   }
@@ -32,52 +31,59 @@ export const Workspaces = () => {
   }, [])
 
   useEffect(() => {
-    const copy = [...workspaces]
-    setRecentlyViewed(copy.slice(0, 3))
+    const copyArray = [...workspaces]
+    const arrayWhithViewAt = copyArray.filter(workspace => workspace.viewAt !== undefined)
+    
+    
+    
+    if (arrayWhithViewAt.length > 0) {
+      const copy = arrayWhithViewAt.sort((a, b) => b.viewAt! - a.viewAt!)
+      setRecentlyViewed(copy.slice(0, 1))
+    }
+
+    if (workspaces.length === 0) {
+      setRecentlyViewed([])
+    }
+
   }, [workspaces])
 
   return (
     <>
       <Header />
 
-      <div className='workspaces'>
+      <div className='mt-10'>
+        <div className='flex justify-end px-4'>
 
-        <div className='workspaces-header'>
-          <h1>
-
-          </h1>
-
-          <button onClick={handleOnCloseModal}>
-            Crear
+          <button className='px-4 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white' onClick={handleOnCloseModal}>
+            New
           </button>
         </div>
 
 
-        <div className=''>
-          <h2 className='text-2xl mb-4'>Vistos recientemente</h2>
-          <WorkspaceContainer>
-            {
-              isLoadingWorkspace ? <p>Cargando...</p> :
-                <WorkspaceContainer>
-                  {
-                    recentlyViewed.map((workspace, index) => (
-                      <WorkspaceItem
-                        key={index}
-                        workspaceId={workspace.workspaceId}
-                        title={workspace.title}
-                        description={workspace.description}
-                        handleOnClickWorkspace={handleOnClickWorkspace}
-                      />
-                    ))
-                  }
-                </WorkspaceContainer>
-            }
-          </WorkspaceContainer>
+        <div className='px-4'>
+          <h2 className='text-2xl mb-4'>Recently viewed </h2>
+
+          {
+            isLoadingWorkspace ? <p>Cargando...</p> :
+              <WorkspaceContainer>
+                {
+                  recentlyViewed.map((workspace, index) => (
+                    <WorkspaceItem
+                      key={index}
+                      workspaceId={workspace.workspaceId}
+                      title={workspace.title}
+                      description={workspace.description}
+                      handleOnClickWorkspace={handleOnClickWorkspace}
+                    />
+                  ))
+                }
+              </WorkspaceContainer>
+          }
 
         </div>
 
-        <div className='mt-10'>
-          <h2 className='text-2xl mb-4'>Tus tableros </h2>
+        <div className='mt-10 px-4'>
+          <h2 className='text-2xl mb-4'>Your workspaces</h2>
           <WorkspaceContainer>
 
             {

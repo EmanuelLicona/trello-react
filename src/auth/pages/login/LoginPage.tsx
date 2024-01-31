@@ -47,7 +47,6 @@ export const LoginPage = () => {
                       message: 'Invalid email address'
                     },
 
-                    value: 'emanuel.licona02@gmail.com'
                   })}
                 />
                 <i>Email Address</i>
@@ -64,7 +63,6 @@ export const LoginPage = () => {
                       message: 'The password must be at least 6 characters'
                     },
 
-                    value: '12345678'
                   })}
                 />
                 <i>Password</i>

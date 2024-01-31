@@ -1,5 +1,4 @@
 import { useWorkspaceStore } from '../../hooks/useWorkspaceStore'
-import './WorkspaceItem.css'
 
 
 interface IWorkspaceItem {
@@ -19,15 +18,24 @@ export const WorkspaceItem = ({ workspaceId, title, description, handleOnClickWo
   }
 
   return (
-    <div className="item-workspace">
-      <div className="item-workspace-header">
-        <h3 className="item-workspace-title" onClick={() => handleOnClickWorkspace(workspaceId)}>{title}</h3>
-        <button className="item-delete-button"
-          onClick={() => handleClickDelete()}
-        >Eliminar</button>
+    <div className='border p-4 rounded-2xl shadow-md min-h-36'>
+
+      <div className='flex justify-between items-center'>
+        <h3 className='text-xl font-bold cursor-pointer'
+          onClick={() => handleOnClickWorkspace(workspaceId)}
+        >{title}</h3>
+        <button className='text-red-500'
+          onClick={() =>  handleClickDelete()}
+        >delete</button>
       </div>
-      <hr className="item-hr-divider" />
-      <p className="item-workspace-description">{description}</p>
+
+      <hr className='my-2' />
+
+      <div className='text-gray-500 text-sm'>
+        <p>{description}</p>
+      </div>
+    
+   
     </div>
   )
 }

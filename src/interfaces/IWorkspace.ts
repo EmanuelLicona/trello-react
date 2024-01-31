@@ -7,4 +7,5 @@ export interface IWorkspace {
   boards?: IBoard[]
   createdAt: number
   updateAt: number
+  viewAt?: number
 }

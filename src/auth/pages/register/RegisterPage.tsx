@@ -3,10 +3,10 @@ import { AuthLayout } from '../../layout/AuthLayout'
 
 import './RegisterPage.css'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+// import { useState } from 'react'
 
 //  TODO DELETE
-import { faker } from '@faker-js/faker'
+// import { faker } from '@faker-js/faker'
 import { useAuthStore } from '../../../hooks/useAuthStore'
 
 
@@ -15,12 +15,12 @@ export const RegisterPage = () => {
 
   const { startCreateUserWithEmailPassword } = useAuthStore()
 
-  const [userfaker] = useState({
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    password: '12345678',
-    confirmPassword: '1234567'
-  })
+  // const [userfaker] = useState({
+  //   name: faker.person.fullName(),
+  //   email: faker.internet.email(),
+  //   password: '12345678',
+  //   confirmPassword: '1234567'
+  // })
 
 
 
@@ -62,7 +62,7 @@ export const RegisterPage = () => {
                       message: 'The full name must be less than 20 characters'
                     },
 
-                    value: userfaker.name
+                    // value: userfaker.name
                   })}
                 />
                 <i>Full name</i>
@@ -84,7 +84,7 @@ export const RegisterPage = () => {
                     },
 
 
-                    value: userfaker.email
+                    // value: userfaker.email
                   })}
                 />
                 <i>Email Address</i>
@@ -101,7 +101,7 @@ export const RegisterPage = () => {
                       message: 'The password must be at least 6 characters'
                     },
 
-                    value: userfaker.password
+                    // value: userfaker.password
                   })}
                 />
                 <i>Password</i>
@@ -119,7 +119,7 @@ export const RegisterPage = () => {
                     },
                     validate: (value) => value === watch('password') || 'The passwords do not match',
 
-                    value: userfaker.password
+                    // value: userfaker.password
 
                   })}
                 />

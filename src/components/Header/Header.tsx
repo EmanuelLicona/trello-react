@@ -1,7 +1,6 @@
 import { LogOut } from 'react-feather'
 import { useAuthStore } from '../../hooks/useAuthStore'
 
-import './Header.css'
 
 export const Header = () => {
 
@@ -12,18 +11,25 @@ export const Header = () => {
   }
 
   return (
-    <header className="header">
-      <div className="profile">
-        {
-          user?.photoURL && <img src={user?.photoURL} alt="Profile" />
-        }
-        <p>{user?.displayName}</p>
+    <header className="flex justify-between items-center border-b-2 px-3  bg-blue-500 text-white
+    shadow-xl
+    ">
 
+      <div>
+        <h1 className="text-3xl font-bold">Task kanban App</h1>
       </div>
 
+      <div className="flex items-center justify-center gap-3 my-4">
+        <div className='flex items-center gap-1'>
+          {
+            user?.photoURL && <img className="w-8 h-8 rounded-full" src={user?.photoURL} alt="Profile" />
+          }
+          <p className="">{user?.displayName}</p>
+        </div>
 
-      <div className='buttons'>
-        <button onClick={handleLogout}><LogOut /></button>
+        <button 
+        className="p-2 rounded-full bg-red-500 hover:bg-red-600"
+        onClick={handleLogout}><LogOut /></button>
       </div>
     </header>
   )

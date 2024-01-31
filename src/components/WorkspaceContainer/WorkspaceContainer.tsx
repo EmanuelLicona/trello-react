@@ -1,10 +1,9 @@
 import { ReactNode } from 'react'
 
-import './WorkspaceContainer.css'
 
 export const WorkspaceContainer = ({ children }: { children: ReactNode}) => {
   return (
-    <div className='workspace-container'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4'>
       {children}
     </div>
   )

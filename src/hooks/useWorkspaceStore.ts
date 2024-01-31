@@ -44,8 +44,8 @@ export const useWorkspaceStore = () => {
 
       const workspaces: IWorkspace[] = []
       docs.forEach(doc => {
-        const { title, description, createdAt, updateAt, boards = [] } = doc.data()
-        workspaces.push({ workspaceId: doc.id, title, description, createdAt, updateAt, boards })
+        const { title, description, createdAt, updateAt, boards = [], viewAt } = doc.data()
+        workspaces.push({ workspaceId: doc.id, title, description, createdAt, updateAt, boards, viewAt })
       })
 
 
@@ -83,7 +83,7 @@ export const useWorkspaceStore = () => {
       if (!uid) throw new Error('User not logged in')
 
       const docRef = doc(FirebaseDB, `${uid}/app/workspaces/${workspace.workspaceId}`)
-      await updateDoc(docRef, { ...workspace})
+      await updateDoc(docRef, { ...workspace, updateAt: new Date().getTime(), viewAt: new Date().getTime() })
 
     } catch (error) {
       console.log(error)

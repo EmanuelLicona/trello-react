@@ -9,6 +9,7 @@ import { useBoardStore } from '../hooks/useBoardStore'
 import { useDragAndDrop } from '../hooks/useDragAndDrop'
 import { useWorkspaceStore } from '../hooks/useWorkspaceStore'
 import { useEffect, useState } from 'react'
+import { ButtonWorkspace } from '../components/ButtonWorkspace/ButtonWorkspace'
 
 
 export const Dashboard = () => {
@@ -49,7 +50,7 @@ export const Dashboard = () => {
     <div className='app'>
 
       <div className='app-nav'>
-        <h1>{currentWorkspace.title}</h1>
+        <h1 className='text-4xl uppercase font-bold'>{currentWorkspace.title}</h1>
       </div>
 
       <div className='app-boards-container'>
@@ -79,6 +80,8 @@ export const Dashboard = () => {
 
         </div>
       </div>
+
+      <ButtonWorkspace />
     </div>
   )
 }
