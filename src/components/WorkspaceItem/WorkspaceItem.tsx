@@ -18,7 +18,7 @@ export const WorkspaceItem = ({ workspaceId, title, description, handleOnClickWo
   }
 
   return (
-    <div className='border p-4 rounded-2xl shadow-md min-h-36'>
+    <div className='border p-4 rounded-2xl shadow-md min-h-36 bg-slate-100'>
 
       <div className='flex justify-between items-center'>
         <h3 className='text-xl font-bold cursor-pointer'
@@ -26,7 +26,7 @@ export const WorkspaceItem = ({ workspaceId, title, description, handleOnClickWo
         >{title}</h3>
         <button className='text-red-500'
           onClick={() =>  handleClickDelete()}
-        >delete</button>
+        >Delete</button>
       </div>
 
       <hr className='my-2' />
